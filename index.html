@@ -9,99 +9,182 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
-        /* 2. COLOR VARIABLES (Easy to change later) */
+        /* 1. CSS VARIABLES (The magic behind Dark Mode) */
         :root {
-            --primary-color: #4f46e5; /* Indigo */
+            --primary: #4f46e5;      /* Indigo */
             --primary-hover: #4338ca;
-            --bg-color: #f3f4f6; /* Light Gray */
-            --card-bg: #ffffff;
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
+            --bg-body: #f3f4f6;      /* Light Gray Background */
+            --bg-card: #ffffff;      /* White Card */
+            --text-main: #1f2937;    /* Dark Gray Text */
+            --text-muted: #6b7280;   /* Light Gray Text */
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --nav-bg: rgba(255, 255, 255, 0.95);
         }
 
-        /* 3. GLOBAL STYLES */
+        /* DARK MODE OVERRIDES */
+        body.dark-mode {
+            --primary: #6366f1;      /* Brighter Indigo for dark mode */
+            --primary-hover: #818cf8;
+            --bg-body: #111827;      /* Very Dark Gray */
+            --bg-card: #1f2937;      /* Dark Gray Card */
+            --text-main: #f9fafb;    /* White Text */
+            --text-muted: #9ca3af;   /* Light Gray Text */
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            --nav-bg: rgba(31, 41, 55, 0.95);
+        }
+
+        /* 2. GLOBAL STYLES */
+        html { scroll-behavior: smooth; } /* Smooth scrolling when clicking nav */
+        
         body { 
             font-family: 'Open Sans', sans-serif; 
             line-height: 1.7; 
             color: var(--text-main); 
+            background-color: var(--bg-body); 
             margin: 0; 
-            padding: 0; 
-            background-color: var(--bg-color); 
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
         }
 
-        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: #111; margin-top: 0; }
-        a { text-decoration: none; transition: 0.3s; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; margin-top: 0; }
+        a { text-decoration: none; color: inherit; }
         
-        .container { 
-            max-width: 900px; 
-            margin: 40px auto; 
-            padding: 0 20px; 
+        /* 3. NAVIGATION BAR */
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: background 0.3s;
         }
 
-        /* 4. HERO HEADER (The big intro) */
+        .nav-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo { font-weight: 700; font-size: 1.2rem; color: var(--primary); }
+        
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { font-weight: 600; font-size: 0.9rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* DARK MODE TOGGLE BTN */
+        #theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            padding: 5px;
+            transition: transform 0.2s;
+        }
+        #theme-toggle:active { transform: scale(0.9); }
+
+        /* 4. MAIN CONTAINER */
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+
+        /* 5. HERO HEADER WITH IMAGE */
         header { 
             text-align: center; 
-            background: var(--card-bg); 
+            background: var(--bg-card); 
             padding: 60px 20px; 
             border-radius: 20px; 
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
             margin-bottom: 40px;
+            transition: background 0.3s;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         
-        header h1 { font-size: 3rem; margin-bottom: 10px; color: var(--primary-color); }
-        header p { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 30px; }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        header p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; }
 
+        /* REACTIVE BUTTONS */
         .btn { 
             display: inline-block; 
-            background: var(--primary-color); 
+            background: var(--primary); 
             color: white; 
             padding: 12px 30px; 
             border-radius: 50px; 
             font-weight: 600; 
             margin: 5px; 
-            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3); 
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2); 
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
         }
-        .btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
-        .btn-outline { background: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); }
-        .btn-outline:hover { background: var(--primary-color); color: white; }
 
-        /* 5. SECTIONS */
-        section { margin-bottom: 50px; }
+        .btn:hover { 
+            background: var(--primary-hover); 
+            transform: translateY(-3px); /* Moves up */
+            box-shadow: 0 8px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn:active { 
+            transform: translateY(1px); /* Press effect */
+            box-shadow: 0 2px 5px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-outline { 
+            background: transparent; 
+            border: 2px solid var(--primary); 
+            color: var(--primary); 
+            box-shadow: none;
+        }
+        .btn-outline:hover { 
+            background: var(--primary); 
+            color: white; 
+        }
+
+        /* 6. SECTIONS & GRID */
+        section { margin-bottom: 60px; scroll-margin-top: 80px; /* Fix for sticky nav covering text */ }
         .section-title { 
             font-size: 1.8rem; 
-            margin-bottom: 20px; 
-            border-left: 5px solid var(--primary-color); 
+            margin-bottom: 25px; 
+            border-left: 5px solid var(--primary); 
             padding-left: 15px; 
         }
 
-        /* 6. PROJECT CARDS (The Grid Layout) */
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive Grid */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
 
         .card {
-            background: var(--card-bg);
+            background: var(--bg-card);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #e5e7eb;
+            box-shadow: var(--shadow);
+            transition: background 0.3s, transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .card:hover {
-            transform: translateY(-5px); /* Lifts up on hover */
-            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
-        }
+        .card:hover { transform: translateY(-5px); }
 
         .tech-stack {
             display: inline-block;
             font-size: 0.8rem;
             font-weight: 600;
-            background: #e0e7ff;
-            color: var(--primary-color);
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary);
             padding: 4px 12px;
             border-radius: 20px;
             margin-bottom: 10px;
@@ -110,79 +193,130 @@
         .project-link {
             display: inline-block;
             margin-top: 15px;
-            color: var(--primary-color);
+            color: var(--primary);
             font-weight: 700;
         }
 
-        /* 7. EDUCATION & FOOTER */
-        .edu-item { background: white; padding: 20px; border-radius: 10px; border-left: 4px solid var(--text-muted); margin-bottom: 15px; }
+        /* EDUCATION & FOOTER */
+        .edu-item { 
+            background: var(--bg-card); 
+            padding: 20px; 
+            border-radius: 10px; 
+            border-left: 4px solid var(--text-muted); 
+            transition: background 0.3s;
+        }
         
         footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-<div class="container">
-
-    <header>
-        <h1>Rodrigo Arao</h1> <p>Passionate Student | Aspiring Tech Intern</p>
-        
-        <div>
-            <a href="mailto:your@email.com" class="btn">Email Me</a>
-            <a href="https://github.com/rodruggo" class="btn btn-outline">GitHub</a>
-            <a href="resume.pdf" class="btn btn-outline">Resume</a>
-        </div>
-    </header>
-
-    <section>
-        <h2 class="section-title">About Me</h2>
-        <p>
-            I am currently studying at <strong>Pasig Catholic College</strong>. I have a strong interest in technology and problem-solving. 
-            I am looking for an internship where I can contribute to a team and learn from experienced professionals.
-        </p>
-    </section>
-
-    <section>
-        <h2 class="section-title">Featured Projects</h2>
-        
-        <div class="project-grid">
-            <div class="card">
-                <span class="tech-stack">Python & Excel</span>
-                <h3>Data Analysis Project</h3>
-                <p>Analyzed a dataset of 5,000 retail sales to identify purchasing trends. Created visual dashboards using PivotTables.</p>
-                <a href="#" class="project-link">View Code →</a>
-            </div>
-
-            <div class="card">
-                <span class="tech-stack">HTML / CSS</span>
-                <h3>Personal Portfolio</h3>
-                <p>Designed and deployed a responsive personal website using GitHub Pages and modern CSS techniques.</p>
-                <a href="#" class="project-link">View Code →</a>
-            </div>
-
-            <div class="card">
-                <span class="tech-stack">Java / C++</span>
-                <h3>Class Management System</h3>
-                <p>A simple console-based application to manage student records and grades using object-oriented programming.</p>
-                <a href="#" class="project-link">View Code →</a>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">RODRIGO.</a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#education">Education</a>
+                <button id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
         </div>
-    </section>
+    </nav>
 
-    <section>
-        <h2 class="section-title">Education</h2>
-        <div class="edu-item">
-            <h3>Pasig Catholic College</h3>
-            <p><strong>Bachelor of Science in [Your Major]</strong> | Expected 20XX</p>
-            <p><em>Relevant Coursework: Web Development, Data Structures, Logic Design</em></p>
-        </div>
-    </section>
+    <div class="container">
 
-    <footer>
-        <p>&copy; 2026 Rodrigo Arao. Built with simple HTML & CSS.</p>
-    </footer>
+        <header>
+            <img src="profile.jpg" alt="Rodrigo Arao" class="profile-img">
+            
+            <h1>Rodrigo Arao</h1>
+            <p>Passionate Student | Aspiring Tech Intern</p>
+            
+            <div>
+                <a href="mailto:your@email.com" class="btn">Contact Me</a>
+                <a href="https://github.com/rodruggo" class="btn btn-outline">GitHub</a>
+                <a href="resume.pdf" class="btn btn-outline">Resume</a>
+            </div>
+        </header>
 
-</div>
+        <section id="about">
+            <h2 class="section-title">About Me</h2>
+            <p>
+                I am currently studying at <strong>Pasig Catholic College</strong>. I have a strong interest in technology and problem-solving. 
+                I am looking for an internship where I can contribute to a team and learn from experienced professionals.
+            </p>
+        </section>
+
+        <section id="projects">
+            <h2 class="section-title">Featured Projects</h2>
+            
+            <div class="project-grid">
+                <div class="card">
+                    <span class="tech-stack">Python & Excel</span>
+                    <h3>Data Analysis Project</h3>
+                    <p>Analyzed a dataset of 5,000 retail sales to identify purchasing trends using Pandas.</p>
+                    <a href="#" class="project-link">View Code →</a>
+                </div>
+
+                <div class="card">
+                    <span class="tech-stack">HTML / CSS</span>
+                    <h3>Personal Portfolio</h3>
+                    <p>Designed and deployed a responsive personal website using GitHub Pages with Dark Mode.</p>
+                    <a href="#" class="project-link">View Code →</a>
+                </div>
+
+                <div class="card">
+                    <span class="tech-stack">Java</span>
+                    <h3>Class Management System</h3>
+                    <p>A simple console-based application to manage student records and grades.</p>
+                    <a href="#" class="project-link">View Code →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="education">
+            <h2 class="section-title">Education</h2>
+            <div class="edu-item">
+                <h3>Pasig Catholic College</h3>
+                <p><strong>Bachelor of Science in [Your Major]</strong> | Expected 20XX</p>
+                <p><em>Relevant Coursework: Web Development, Data Structures, Logic Design</em></p>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Rodrigo Arao. Built with HTML, CSS & JavaScript.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const body = document.body;
+        const icon = toggleButton.querySelector('i');
+
+        // Check if user already has a preference saved in browser
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            // Switch Icon
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark'); // Save preference
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light'); // Save preference
+            }
+        });
+    </script>
 
 </body>
 </html>
