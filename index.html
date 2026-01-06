@@ -8,204 +8,94 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* 1. CSS VARIABLES (The magic behind Dark Mode) */
+        /* --- VARIABLES --- */
         :root {
-            --primary: #4f46e5;      /* Indigo */
+            --primary: #4f46e5;
             --primary-hover: #4338ca;
-            --bg-body: #f3f4f6;      /* Light Gray Background */
-            --bg-card: #ffffff;      /* White Card */
-            --text-main: #1f2937;    /* Dark Gray Text */
-            --text-muted: #6b7280;   /* Light Gray Text */
+            --bg-body: #f3f4f6;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --nav-bg: rgba(255, 255, 255, 0.95);
         }
 
-        /* DARK MODE OVERRIDES */
         body.dark-mode {
-            --primary: #6366f1;      /* Brighter Indigo for dark mode */
+            --primary: #6366f1;
             --primary-hover: #818cf8;
-            --bg-body: #111827;      /* Very Dark Gray */
-            --bg-card: #1f2937;      /* Dark Gray Card */
-            --text-main: #f9fafb;    /* White Text */
-            --text-muted: #9ca3af;   /* Light Gray Text */
+            --bg-body: #111827;
+            --bg-card: #1f2937;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
             --nav-bg: rgba(31, 41, 55, 0.95);
         }
 
-        /* 2. GLOBAL STYLES */
-        html { scroll-behavior: smooth; } /* Smooth scrolling when clicking nav */
-        
-        body { 
-            font-family: 'Open Sans', sans-serif; 
-            line-height: 1.7; 
-            color: var(--text-main); 
-            background-color: var(--bg-body); 
-            margin: 0; 
-            transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
-        }
-
+        /* --- GLOBAL & NAV (Same as before) --- */
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Open Sans', sans-serif; line-height: 1.7; color: var(--text-main); background-color: var(--bg-body); margin: 0; transition: 0.3s; }
         h1, h2, h3 { font-family: 'Poppins', sans-serif; margin-top: 0; }
         a { text-decoration: none; color: inherit; }
         
-        /* 3. NAVIGATION BAR */
-        nav {
-            position: sticky;
-            top: 0;
-            background: var(--nav-bg);
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            padding: 15px 0;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-            transition: background 0.3s;
-        }
-
-        .nav-container {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-
+        nav { position: sticky; top: 0; background: var(--nav-bg); backdrop-filter: blur(10px); padding: 15px 0; z-index: 1000; box-shadow: var(--shadow); }
+        .nav-container { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
         .logo { font-weight: 700; font-size: 1.2rem; color: var(--primary); }
-        
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links a { font-weight: 600; font-size: 0.9rem; transition: color 0.2s; }
         .nav-links a:hover { color: var(--primary); }
+        #theme-toggle { background: none; border: none; cursor: pointer; color: var(--text-main); font-size: 1.2rem; }
 
-        /* DARK MODE TOGGLE BTN */
-        #theme-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-main);
-            font-size: 1.2rem;
-            padding: 5px;
-            transition: transform 0.2s;
-        }
-        #theme-toggle:active { transform: scale(0.9); }
-
-        /* 4. MAIN CONTAINER */
         .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
 
-        /* 5. HERO HEADER WITH IMAGE */
-        header { 
-            text-align: center; 
-            background: var(--bg-card); 
-            padding: 60px 20px; 
-            border-radius: 20px; 
-            box-shadow: var(--shadow);
-            margin-bottom: 40px;
-            transition: background 0.3s;
-        }
-
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 4px solid var(--primary);
-            margin-bottom: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-        
+        /* --- HEADER --- */
+        header { text-align: center; background: var(--bg-card); padding: 60px 20px; border-radius: 20px; box-shadow: var(--shadow); margin-bottom: 40px; }
+        .profile-img { width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 4px solid var(--primary); margin-bottom: 20px; }
         header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        header p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; }
+        
+        .btn { display: inline-block; background: var(--primary); color: white; padding: 12px 30px; border-radius: 50px; font-weight: 600; margin: 5px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2); transition: 0.2s; border: 2px solid transparent;}
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(79, 70, 229, 0.3); }
+        .btn:active { transform: translateY(1px); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); box-shadow: none; }
+        .btn-outline:hover { background: var(--primary); color: white; }
 
-        /* REACTIVE BUTTONS */
-        .btn { 
-            display: inline-block; 
-            background: var(--primary); 
-            color: white; 
-            padding: 12px 30px; 
-            border-radius: 50px; 
-            font-weight: 600; 
-            margin: 5px; 
-            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2); 
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-        }
-
-        .btn:hover { 
-            background: var(--primary-hover); 
-            transform: translateY(-3px); /* Moves up */
-            box-shadow: 0 8px 15px rgba(79, 70, 229, 0.3);
-        }
-
-        .btn:active { 
-            transform: translateY(1px); /* Press effect */
-            box-shadow: 0 2px 5px rgba(79, 70, 229, 0.2);
-        }
-
-        .btn-outline { 
-            background: transparent; 
-            border: 2px solid var(--primary); 
-            color: var(--primary); 
-            box-shadow: none;
-        }
-        .btn-outline:hover { 
-            background: var(--primary); 
-            color: white; 
-        }
-
-        /* 6. SECTIONS & GRID */
-        section { margin-bottom: 60px; scroll-margin-top: 80px; /* Fix for sticky nav covering text */ }
-        .section-title { 
-            font-size: 1.8rem; 
-            margin-bottom: 25px; 
-            border-left: 5px solid var(--primary); 
-            padding-left: 15px; 
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            transition: background 0.3s, transform 0.3s;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
+        /* --- CAROUSEL STYLES (NEW!) --- */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        
+        .card { background: var(--bg-card); border-radius: 15px; box-shadow: var(--shadow); overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s; }
         .card:hover { transform: translateY(-5px); }
 
-        .tech-stack {
-            display: inline-block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            background: rgba(79, 70, 229, 0.1);
-            color: var(--primary);
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-bottom: 10px;
-        }
-
-        .project-link {
-            display: inline-block;
-            margin-top: 15px;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        /* EDUCATION & FOOTER */
-        .edu-item { 
-            background: var(--bg-card); 
-            padding: 20px; 
-            border-radius: 10px; 
-            border-left: 4px solid var(--text-muted); 
-            transition: background 0.3s;
-        }
+        /* The Image Box */
+        .carousel-container { position: relative; width: 100%; height: 200px; background: #ddd; overflow: hidden; }
         
+        .slide { 
+            width: 100%; height: 100%; object-fit: cover; 
+            display: none; /* Hidden by default */
+        }
+        .slide.active { display: block; /* Only show active slide */ }
+
+        /* Next/Prev Buttons */
+        .prev, .next {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5); color: white; border: none;
+            padding: 10px; cursor: pointer; border-radius: 50%; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.2s;
+        }
+        .prev:hover, .next:hover { background-color: rgba(0,0,0,0.8); }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+        /* Card Content */
+        .card-content { padding: 25px; }
+        .tech-stack { font-size: 0.75rem; font-weight: 700; background: rgba(79, 70, 229, 0.1); color: var(--primary); padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .project-link { display: inline-block; margin-top: 15px; color: var(--primary); font-weight: 700; }
+
+        /* SECTIONS & FOOTER */
+        section { margin-bottom: 60px; scroll-margin-top: 80px; }
+        .section-title { font-size: 1.8rem; margin-bottom: 25px; border-left: 5px solid var(--primary); padding-left: 15px; }
+        .edu-item { background: var(--bg-card); padding: 20px; border-radius: 10px; border-left: 4px solid var(--text-muted); }
         footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.9rem; }
     </style>
 </head>
@@ -213,14 +103,12 @@
 
     <nav>
         <div class="nav-container">
-            <a href="#" class="logo">RODRIGO ARAOARAO JR.</a>
+            <a href="#" class="logo">RODRIGO.</a>
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#projects">Projects</a>
                 <a href="#education">Education</a>
-                <button id="theme-toggle">
-                    <i class="fas fa-moon"></i>
-                </button>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
             </div>
         </div>
     </nav>
@@ -228,74 +116,83 @@
     <div class="container">
 
         <header>
-            <img src="profile.png" alt="Rodrigo Araoarao" class="profile-img">
-            
-            <h1>Rodrigo Araoarao</h1>
-            <p>Passionate Student | Aspiring Tech Intern</p>
-            
+            <img src="profile.jpg" alt="Rodrigo Arao" class="profile-img">
+            <h1>Rodrigo Arao</h1>
+            <p>Tech Enthusiast | Hands-on Problem Solver</p>
+            <p style="max-width: 600px; margin: 0 auto 30px auto; font-size: 1rem;">
+                Motivated and versatile student seeking an IT internship to apply hands-on skills in networking, hardware troubleshooting, and coding.
+            </p>
             <div>
-                <a href="mailto:rodrigoaraoaraojr@gmail.com" class="btn">Contact Me</a>
+                <a href="mailto:your@email.com" class="btn">Contact Me</a>
                 <a href="https://github.com/rodruggo" class="btn btn-outline">GitHub</a>
                 <a href="resume.pdf" class="btn btn-outline">Resume</a>
             </div>
         </header>
 
-        <section id="about">
-            <h2 class="section-title">About Me</h2>
-            <p>
-                I am currently studying at <strong>Cristal e- College</strong>. I have a strong interest in technology and Networking. 
-                I am looking for an internship where I can contribute to a team and learn from experienced professionals.
-            </p>
-        </section>
-
         <section id="projects">
             <h2 class="section-title">Featured Projects</h2>
             
             <div class="project-grid">
-                <div class="card">
-                    <span class="tech-stack">Python & Excel</span>
-                    <h3>Data Analysis Project</h3>
-                    <p>Analyzed a dataset of 5,000 retail sales to identify purchasing trends using Pandas.</p>
-                    <a href="#" class="project-link">View Code →</a>
+                
+                <div class="card" id="project-1">
+                    <div class="carousel-container">
+                        <img src="project1-1.jpg" class="slide active"> 
+                        <img src="project1-2.jpg" class="slide">
+                        <img src="project1-3.jpg" class="slide">
+                        
+                        <button class="prev" onclick="changeSlide('project-1', -1)">&#10094;</button>
+                        <button class="next" onclick="changeSlide('project-1', 1)">&#10095;</button>
+                    </div>
+                    
+                    <div class="card-content">
+                        <span class="tech-stack">Python & Excel</span>
+                        <h3>Data Analysis Tool</h3>
+                        <p>Analyzed 5,000 retail sales to identify trends. The dashboard highlights top-selling regions.</p>
+                        <a href="#" class="project-link">View Code →</a>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <span class="tech-stack">HTML / CSS</span>
-                    <h3>Personal Portfolio</h3>
-                    <p>Designed and deployed a responsive personal website using GitHub Pages with Dark Mode.</p>
-                    <a href="#" class="project-link">View Code →</a>
+                <div class="card" id="project-2">
+                    <div class="carousel-container">
+                        <img src="project2-1.jpg" class="slide active">
+                        <img src="project2-2.jpg" class="slide">
+                        
+                        <button class="prev" onclick="changeSlide('project-2', -1)">&#10094;</button>
+                        <button class="next" onclick="changeSlide('project-2', 1)">&#10095;</button>
+                    </div>
+
+                    <div class="card-content">
+                        <span class="tech-stack">HTML / CSS</span>
+                        <h3>Portfolio Website</h3>
+                        <p>A responsive, dark-mode enabled portfolio built from scratch to showcase my work.</p>
+                        <a href="#" class="project-link">View Code →</a>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <span class="tech-stack">Java</span>
-                    <h3>Class Management System</h3>
-                    <p>A simple console-based application to manage student records and grades.</p>
-                    <a href="#" class="project-link">View Code →</a>
-                </div>
             </div>
         </section>
 
         <section id="education">
             <h2 class="section-title">Education</h2>
             <div class="edu-item">
-                <h3>Cristal e- College</h3>
-                <p><strong>Bachelor of Science in Information and Technology</strong> | Expected 2026</p>
-                <p><em>Relevant Coursework: Web Development, Networking, Video Editing, Hardware Troubleshooting</em></p>
+                <h3>Pasig Catholic College</h3>
+                <p><strong>Bachelor of Science in [Your Major]</strong> | Expected 20XX</p>
+                <p><em>Relevant Coursework: Networking, Hardware Troubleshooting, Video Editing</em></p>
             </div>
         </section>
 
         <footer>
-            <p>&copy; 2026 Rodrigo Araoarao. Built with HTML, CSS & JavaScript.</p>
+            <p>&copy; 2026 Rodrigo Arao. Built with HTML, CSS & JavaScript.</p>
         </footer>
 
     </div>
 
     <script>
+        // --- 1. DARK MODE LOGIC ---
         const toggleButton = document.getElementById('theme-toggle');
         const body = document.body;
         const icon = toggleButton.querySelector('i');
 
-        // Check if user already has a preference saved in browser
         if (localStorage.getItem('theme') === 'dark') {
             body.classList.add('dark-mode');
             icon.classList.remove('fa-moon');
@@ -304,18 +201,45 @@
 
         toggleButton.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
-            
-            // Switch Icon
             if (body.classList.contains('dark-mode')) {
                 icon.classList.remove('fa-moon');
                 icon.classList.add('fa-sun');
-                localStorage.setItem('theme', 'dark'); // Save preference
+                localStorage.setItem('theme', 'dark');
             } else {
                 icon.classList.remove('fa-sun');
                 icon.classList.add('fa-moon');
-                localStorage.setItem('theme', 'light'); // Save preference
+                localStorage.setItem('theme', 'light');
             }
         });
+
+        // --- 2. CAROUSEL LOGIC ---
+        function changeSlide(projectId, direction) {
+            // Find the specific card
+            const projectCard = document.getElementById(projectId);
+            // Get all images (slides) inside that card
+            const slides = projectCard.getElementsByClassName('slide');
+            
+            let activeIndex = 0;
+
+            // Find which slide is currently showing
+            for (let i = 0; i < slides.length; i++) {
+                if (slides[i].classList.contains('active')) {
+                    activeIndex = i;
+                    break;
+                }
+            }
+
+            // Hide current slide
+            slides[activeIndex].classList.remove('active');
+
+            // Calculate new index (Loop around if at end or start)
+            let newIndex = activeIndex + direction;
+            if (newIndex >= slides.length) newIndex = 0;
+            if (newIndex < 0) newIndex = slides.length - 1;
+
+            // Show new slide
+            slides[newIndex].classList.add('active');
+        }
     </script>
 
 </body>
